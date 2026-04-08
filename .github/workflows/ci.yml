@@ -21,10 +21,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run unit tests
-        run: ./mvnw test -Dtest="**/*Tests" -DfailIfNoTests=false
-
-      - name: Run integration tests
+      - name: Run unit and integration tests
         env:
           DOCKER_HOST: unix:///var/run/docker.sock
         run: ./mvnw test -Dtest="**/*IntegrationTests" -DfailIfNoTests=false
