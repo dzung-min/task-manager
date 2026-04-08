@@ -10,22 +10,7 @@ jobs:
   test:
     name: Unit & Integration Tests
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:lts
-        env:
-          MYSQL_DATABASE: taskmanager_test
-          MYSQL_USER: dzung
-          MYSQL_PASSWORD: password
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
