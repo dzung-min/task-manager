@@ -31,7 +31,7 @@ import lombok.Setter;
 @Builder
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -43,9 +43,17 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
+    // the value of enum type is number by default
+    // enum TaskPriority {
+    //    LOW,      -> 0
+    //    MEDIUM,   -> 1
+    //    HIGH      -> 2
+    // }
+    // we need this annotation for storing (ex: "LOW", "MEDIUM", "HIGH") 
     @Enumerated(EnumType.STRING)
     private TaskPriority priority;
     
+    // set fetching type to LAZE to prevent N + 1 problem with Hibernate 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -55,8 +63,10 @@ public class Task {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // JPA will call this function before repository.save()
+    // so it doesn't need to be public
     @PrePersist
-    public void onCreate() {
+    private void onCreate() {
         createdAt = LocalDateTime.now();
     }
 }
