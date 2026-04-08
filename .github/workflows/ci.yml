@@ -25,11 +25,3 @@ jobs:
         env:
           DOCKER_HOST: unix:///var/run/docker.sock
         run: ./mvnw test -Dtest="**/*IntegrationTests" -DfailIfNoTests=false
-
-      - name: Upload test reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports
-          path: target/surefire-reports/
-          retention-days: 7
